@@ -57,4 +57,31 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
             Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
 
     }
+    fun readData() : MutableList<User>{
+        var list : MutableList<User> = ArrayList()
+
+        val db = this.readableDatabase
+        val query = "SELECT * FROM " + TABLE_NAME
+        val result = db.rawQuery(query, null)
+        if(result.moveToFirst()){
+            do{
+                var user = User()
+                user.id = result.getString(result.getColumnIndex(COL_ID)).toInt()
+                user.userId = result.getString(result.getColumnIndex(COL_USERID)).toInt()
+                user.time1 = result.getString(result.getColumnIndex(COL_TIME1)).toString()
+                user.time2 = result.getString(result.getColumnIndex(COL_TIME2)).toString()
+                user.time3 = result.getString(result.getColumnIndex(COL_TIME3)).toString()
+                user.time4 = result.getString(result.getColumnIndex(COL_TIME4)).toString()
+                user.time5 = result.getString(result.getColumnIndex(COL_TIME5)).toString()
+                user.time6 = result.getString(result.getColumnIndex(COL_TIME6)).toString()
+                list.add(user)
+
+            }while (result.moveToNext())
+        }
+
+        result.close()
+        db.close()
+
+        return list
+    }
 }

@@ -20,4 +20,8 @@ class User{
         this.time5 = time5
         this.time6 = time6
     }
+
+    constructor(){
+
+    }
 }
