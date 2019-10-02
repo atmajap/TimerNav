@@ -16,6 +16,7 @@ val COL_TIME3 = "time3"
 val COL_TIME4 = "time4"
 val COL_TIME5 = "time5"
 val COL_TIME6 = "time6"
+val COL_TIMESTAMP = "timestamp"
 
 class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     override fun onCreate(db: SQLiteDatabase?) {
@@ -29,7 +30,8 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 COL_TIME3 + " VARCHAR(256)," +
                 COL_TIME4 + " VARCHAR(256)," +
                 COL_TIME5 + " VARCHAR(256)," +
-                COL_TIME6 + " VARCHAR(256))";
+                COL_TIME6 + " VARCHAR(256)," +
+                COL_TIMESTAMP + " VARCHAR(256))";
 
         db?.execSQL(createTable)
 
@@ -50,6 +52,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         cv.put(COL_TIME4, user.time4)
         cv.put(COL_TIME5, user.time5)
         cv.put(COL_TIME6, user.time6)
+        cv.put(COL_TIMESTAMP, user.timestamp)
         var result = db.insert(TABLE_NAME, null, cv)
         if(result == -1.toLong())
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
@@ -74,6 +77,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 user.time4 = result.getString(result.getColumnIndex(COL_TIME4)).toString()
                 user.time5 = result.getString(result.getColumnIndex(COL_TIME5)).toString()
                 user.time6 = result.getString(result.getColumnIndex(COL_TIME6)).toString()
+                user.timestamp = result.getString(result.getColumnIndex(COL_TIMESTAMP)).toString()
                 list.add(user)
 
             }while (result.moveToNext())

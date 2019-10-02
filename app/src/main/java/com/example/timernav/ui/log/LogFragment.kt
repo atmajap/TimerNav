@@ -29,7 +29,7 @@ class LogFragment : Fragment() {
         for (i in 0..data.size-1){
             root.text_log.append(data.get(i).id.toString() + " " + data.get(i).userId.toString() + " "
             + data.get(i).time1 + " " + data.get(i).time2 + " " + data.get(i).time3 + " " + data.get(i).time4 + " "
-            + data.get(i).time5 + " " + data.get(i).time6 + "\n")
+            + data.get(i).time5 + " " + data.get(i).time6 + " " + data.get(i).timestamp + "\n")
         }
 
 //        val textView: TextView = root.findViewById(R.id.text_slideshow)

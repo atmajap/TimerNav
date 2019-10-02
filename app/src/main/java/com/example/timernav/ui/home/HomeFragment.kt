@@ -25,6 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.sql.Timestamp
 
 class HomeFragment : Fragment() {
 
@@ -106,6 +107,9 @@ class HomeFragment : Fragment() {
             val dialog = AlertDialog.Builder(context)
             val dialogView = layoutInflater.inflate(R.layout.custom_dialog, null)
             val idNumber = dialogView.findViewById<EditText>(R.id.id_number)
+
+            val currentTimestamp = Timestamp(System.currentTimeMillis())
+
             dialog.setView(dialogView)
             dialog.setCancelable(true)
             dialog.setPositiveButton("validate", { dialogInterface: DialogInterface, i: Int -> })
@@ -117,7 +121,7 @@ class HomeFragment : Fragment() {
                         idNumber.text.toString().toInt(), lap1Result_text!!.text.toString(),
                         lap2Result_text!!.text.toString(), lap3Result_text!!.text.toString(),
                         lap4Result_text!!.text.toString(), lap5Result_text!!.text.toString(),
-                        lap6Result_text!!.text.toString()
+                        lap6Result_text!!.text.toString(), currentTimestamp.toString()
                     )
                     var db = DataBaseHandler(context)
                     db.insertData(user)
