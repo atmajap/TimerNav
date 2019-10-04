@@ -36,13 +36,8 @@ class LogFragment : Fragment() {
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = Adapter(childFragmentManager)
         adapter.addFragment(LogUserFragment(), getString(R.string.logfragment_tab1_title))
-        adapter.addFragment(LogUserFragment(), getString(R.string.logfragment_tab2_title))
-//        adapter.addFragment(TodaysixturesFragment(), view?.resources?.getString(R.string.logfragment_tab1_title)
-//            ?: "")
-//        adapter.addFragment(WeekFixturesFragment(), "Date")
+        adapter.addFragment(LogDateFragment(), getString(R.string.logfragment_tab2_title))
         viewPager.adapter = adapter
-
-
     }
 
     internal class Adapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {

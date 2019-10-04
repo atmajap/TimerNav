@@ -11,9 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.timernav.databinding.FragmentLogUserBinding
-import kotlinx.android.synthetic.main.fragment_log_user.*
 
-class LogUserFragment : Fragment(), UserAdapter.OnUSerClickListener {
+class LogUserFragment : Fragment(), UserAdapter.OnUserClickListener {
 
     override fun onUserClick(item: String) {
         //TODO go to next page
@@ -35,7 +34,7 @@ class LogUserFragment : Fragment(), UserAdapter.OnUSerClickListener {
         viewModel.getUserData()
 
         adapter = UserAdapter(context!!, arrayListOf(), this)
-        rv_user.layoutManager = LinearLayoutManager(context)
+        binding.rvUser.layoutManager = LinearLayoutManager(context)
         binding.rvUser.adapter = adapter
 
         viewModel.userList.observe(this, Observer { data ->

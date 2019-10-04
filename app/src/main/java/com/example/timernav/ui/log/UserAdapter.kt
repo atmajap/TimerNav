@@ -9,11 +9,11 @@ import com.example.timernav.R
 import com.example.timernav.databinding.ItemLogUserBinding
 
 class UserAdapter(val context: Context, userList: ArrayList<String>,
-                  private val listener: OnUSerClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                  private val listener: OnUserClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val data: MutableList<String> = userList.toMutableList()
 
-    interface OnUSerClickListener {
+    interface OnUserClickListener {
         fun onUserClick(item: String)
     }
 
@@ -26,7 +26,7 @@ class UserAdapter(val context: Context, userList: ArrayList<String>,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
         val itemBinding : ItemLogUserBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_log_user , parent, false)
-        return ViewHolder(itemBinding)
+        return UserViewHolder(itemBinding)
     }
 
     override fun getItemCount(): Int = if (data.size == 0) {
@@ -36,13 +36,13 @@ class UserAdapter(val context: Context, userList: ArrayList<String>,
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        val holder = viewHolder as ViewHolder
+        val holder = viewHolder as UserViewHolder
         holder.bindView(data[position])
         holder.itemView.setOnClickListener { listener.onUserClick(data[position]) }
     }
 }
 
-class ViewHolder(private val itemBinding: ItemLogUserBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+class UserViewHolder(private val itemBinding: ItemLogUserBinding) : RecyclerView.ViewHolder(itemBinding.root) {
 
     fun bindView(item: String) {
         itemBinding.userId.text = item
