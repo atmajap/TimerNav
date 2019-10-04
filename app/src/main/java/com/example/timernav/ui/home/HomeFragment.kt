@@ -2,6 +2,7 @@ package com.example.timernav.ui.home
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+    private var callClicked = 0
 
 
     override fun onCreateView(
@@ -49,82 +51,90 @@ class HomeFragment : Fragment() {
         val call = jsonPlaceHolderApi.posts
 
         root.call_button.setOnClickListener {
-            lap1Result_text!!.text = ""
-            lap2Result_text!!.text = ""
-            lap3Result_text!!.text = ""
-            lap4Result_text!!.text = ""
-            lap5Result_text!!.text = ""
-            lap6Result_text!!.text = ""
-            call.clone().enqueue(object : Callback<List<Post>> {
-                override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
 
-                    if (!response.isSuccessful) {
-                        lap1Result_text!!.text = "Code : " + response.code()
-                        lap2Result_text!!.text = "Code : " + response.code()
-                        lap3Result_text!!.text = "Code : " + response.code()
-                        lap4Result_text!!.text = "Code : " + response.code()
-                        lap5Result_text!!.text = "Code : " + response.code()
-                        lap6Result_text!!.text = "Code : " + response.code()
-                        return
-                    }
+            if (callClicked == 0) {
+                callClicked = 1
+                lap1Result_text?.text = ""
+                lap2Result_text?.text = ""
+                lap3Result_text?.text = ""
+                lap4Result_text?.text = ""
+                lap5Result_text?.text = ""
+                lap6Result_text?.text = ""
+                call.clone().enqueue(object : Callback<List<Post>> {
+                    override fun onResponse(
+                        call: Call<List<Post>>,
+                        response: Response<List<Post>>
+                    ) {
+                        callClicked = 0
 
-                    val posts = response.body()
+                        if (!response.isSuccessful) {
+                            lap1Result_text?.text = "Code : ${response.code()}"
+                            lap2Result_text?.text = "Code : ${response.code()}"
+                            lap3Result_text?.text = "Code : ${response.code()}"
+                            lap4Result_text?.text = "Code : ${response.code()}"
+                            lap5Result_text?.text = "Code : ${response.code()}"
+                            lap6Result_text?.text = "Code : ${response.code()}"
+                            return
+                        }
 
-                    for (post in posts!!) {
-                        /*var content = ""
-                        content += "userId: " + post.userId + "\n"
-                        content += "id: " + post.id + "\n\n"
-                        content += "title: " + post.title + "\n"
-                        content += "body: " + post.body + "\n\n"*/
-                        when (post.id) {
-                            1 -> lap1Result_text!!.append(post.time.toString())
-                            2 -> lap2Result_text!!.append(post.time.toString())
-                            3 -> lap3Result_text!!.append(post.time.toString())
-                            4 -> lap4Result_text!!.append(post.time.toString())
-                            5 -> lap5Result_text!!.append(post.time.toString())
-                            6 -> lap6Result_text!!.append(post.time.toString())
-                            else -> {
+                        val posts = response.body()
+
+                        for (post in posts!!) {
+                            when (post.id) {
+                                1 -> lap1Result_text?.append(post.time.toString())
+                                2 -> lap2Result_text?.append(post.time.toString())
+                                3 -> lap3Result_text?.append(post.time.toString())
+                                4 -> lap4Result_text?.append(post.time.toString())
+                                5 -> lap5Result_text?.append(post.time.toString())
+                                6 -> lap6Result_text?.append(post.time.toString())
+                                else -> {
+                                }
                             }
                         }
                     }
-                }
 
-                override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-                    lap1Result_text!!.text = t.message
-                    lap2Result_text!!.text = t.message
-                    lap3Result_text!!.text = t.message
-                    lap4Result_text!!.text = t.message
-                    lap5Result_text!!.text = t.message
-                    lap6Result_text!!.text = t.message
-                }
+                    override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                        callClicked = 0
+                        lap1Result_text?.text = t.message
+                        lap2Result_text?.text = t.message
+                        lap3Result_text?.text = t.message
+                        lap4Result_text?.text = t.message
+                        lap5Result_text?.text = t.message
+                        lap6Result_text?.text = t.message
+                    }
 
-            })
+                })
+            }
         }
 
         root.save_button.setOnClickListener() {
             val context = root.context
-            val dialog = AlertDialog.Builder(context)
-            val dialogView = layoutInflater.inflate(R.layout.custom_dialog, null)
-            val idNumber = dialogView.findViewById<EditText>(R.id.id_number)
-            dialog.setView(dialogView)
-            dialog.setCancelable(true)
-            dialog.setPositiveButton("validate", { dialogInterface: DialogInterface, i: Int -> })
-            val customDialog = dialog.create()
-            customDialog.show()
-            customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                if (idNumber.text.length > 5) {
-                    var user = User(
-                        idNumber.text.toString().toInt(), lap1Result_text!!.text.toString(),
-                        lap2Result_text!!.text.toString(), lap3Result_text!!.text.toString(),
-                        lap4Result_text!!.text.toString(), lap5Result_text!!.text.toString(),
-                        lap6Result_text!!.text.toString()
-                    )
-                    var db = DataBaseHandler(context)
-                    db.insertData(user)
-                    customDialog.dismiss()
-                } else
-                    Toast.makeText(activity!!.baseContext, "ID not valid", Toast.LENGTH_SHORT).show()
-            }
+//            val dialog = AlertDialog.Builder(context)
+//            val dialogView = layoutInflater.inflate(R.layout.custom_dialog, null)
+//            val idNumber = dialogView.findViewById<EditText>(R.id.id_number)
+//            dialog.setView(dialogView)
+//            dialog.setCancelable(true)
+//            dialog.setPositiveButton("validate", { dialogInterface: DialogInterface, i: Int -> })
+//            val customDialog = dialog.create()
+//            customDialog.show()
+//            customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+//                if (idNumber.text.length > 5) {
+//                    var user = User(
+//                        idNumber.text.toString().toInt(), lap1Result_text?.text.toString(),
+//                        lap2Result_text?.text.toString(), lap3Result_text?.text.toString(),
+//                        lap4Result_text?.text.toString(), lap5Result_text?.text.toString(),
+//                        lap6Result_text?.text.toString()
+//                    )
+//                    var db = DataBaseHandler(context)
+//                    db.insertData(user)
+//                    db.getAllDateData()
+//                    customDialog.dismiss()
+//                } else
+//                    Toast.makeText(activity?.baseContext, "ID not valid", Toast.LENGTH_SHORT).show()
+//            }
+            var db = DataBaseHandler(context)
+            val arrayOfDate = db.getAllDateData()
+            Log.d("arrayofdate", arrayOfDate.toString())
         }
 
         return root
