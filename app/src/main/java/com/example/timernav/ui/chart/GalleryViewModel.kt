@@ -1,4 +1,4 @@
-package com.example.timernav.ui.gallery
+package com.example.timernav.ui.chart
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

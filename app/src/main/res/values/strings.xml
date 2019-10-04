@@ -9,7 +9,7 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_chart">Chart</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_log">Log</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
@@ -23,4 +23,7 @@
     <string name="call">Call</string>
     <string name="save">Save</string>
     <string name="id_number">ID Number</string>
+
+    <string name="logfragment_tab1_title">User</string>
+    <string name="logfragment_tab2_title">Date</string>
 </resources>

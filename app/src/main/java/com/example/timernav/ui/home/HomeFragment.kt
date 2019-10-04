@@ -2,30 +2,27 @@ package com.example.timernav.ui.home
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.timernav.R
 import com.example.timerretrofit.DataBaseHandler
 import com.example.timerretrofit.Post
 import com.example.timerretrofit.User
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.custom_dialog.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -107,34 +104,36 @@ class HomeFragment : Fragment() {
             }
         }
 
-        root.save_button.setOnClickListener() {
+        root.save_button.setOnClickListener {
             val context = root.context
-//            val dialog = AlertDialog.Builder(context)
-//            val dialogView = layoutInflater.inflate(R.layout.custom_dialog, null)
-//            val idNumber = dialogView.findViewById<EditText>(R.id.id_number)
-//            dialog.setView(dialogView)
-//            dialog.setCancelable(true)
-//            dialog.setPositiveButton("validate", { dialogInterface: DialogInterface, i: Int -> })
-//            val customDialog = dialog.create()
-//            customDialog.show()
-//            customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-//                if (idNumber.text.length > 5) {
-//                    var user = User(
-//                        idNumber.text.toString().toInt(), lap1Result_text?.text.toString(),
-//                        lap2Result_text?.text.toString(), lap3Result_text?.text.toString(),
-//                        lap4Result_text?.text.toString(), lap5Result_text?.text.toString(),
-//                        lap6Result_text?.text.toString()
-//                    )
-//                    var db = DataBaseHandler(context)
-//                    db.insertData(user)
-//                    db.getAllDateData()
-//                    customDialog.dismiss()
-//                } else
-//                    Toast.makeText(activity?.baseContext, "ID not valid", Toast.LENGTH_SHORT).show()
-//            }
-            var db = DataBaseHandler(context)
-            val arrayOfDate = db.getAllDateData()
-            Log.d("arrayofdate", arrayOfDate.toString())
+            val dialog = AlertDialog.Builder(context)
+            val dialogView = layoutInflater.inflate(R.layout.custom_dialog, null)
+            val idNumber = dialogView.findViewById<EditText>(R.id.id_number)
+            dialog.setView(dialogView)
+            dialog.setCancelable(true)
+            dialog.setPositiveButton("validate", { dialogInterface: DialogInterface, i: Int -> })
+            val customDialog = dialog.create()
+            customDialog.show()
+            customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                if (idNumber.text.length > 5) {
+
+                    val outputPattern = "dd-MMM-yyyy"
+                    val outputFormat = SimpleDateFormat(outputPattern)
+                    val date = outputFormat.format(Date())
+
+                    var user = User(
+                        userId = idNumber.text.toString().toInt(), time1 = lap1Result_text?.text.toString(),
+                        time2 = lap2Result_text?.text.toString(), time3 = lap3Result_text?.text.toString(),
+                        time4 = lap4Result_text?.text.toString(), time5 = lap5Result_text?.text.toString(),
+                        time6 = lap6Result_text?.text.toString(), date = date
+                    )
+                    var db = DataBaseHandler()
+                    db.insertData(user)
+                    customDialog.dismiss()
+                } else
+                    Toast.makeText(activity?.baseContext, "ID not valid", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         return root
