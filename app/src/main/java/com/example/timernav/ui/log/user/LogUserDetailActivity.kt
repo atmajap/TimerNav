@@ -6,20 +6,19 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.example.timernav.R
-import com.example.timernav.databinding.ActivityLogUserBinding
-import kotlinx.android.synthetic.main.activity_log_user.*
+import kotlinx.android.synthetic.main.activity_log_user_detail.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.timernav.databinding.ActivityLogUserDetailBinding
 import com.example.timernav.model.LogDetail
 import com.example.timernav.ui.log.logdetail.LogDetailActivity
-
 
 class LogUserDetailActivity : AppCompatActivity(), UserDetailAdapter.OnUserClickListener {
 
     private lateinit var viewModel: LogUserDetailViewModel
     private lateinit var adapter : UserDetailAdapter
-    private lateinit var binding : ActivityLogUserBinding
+    private lateinit var binding : ActivityLogUserDetailBinding
 
     override fun onUserClick(item: LogDetail) {
         val intent = Intent(this, LogDetailActivity::class.java)
@@ -40,7 +39,7 @@ class LogUserDetailActivity : AppCompatActivity(), UserDetailAdapter.OnUserClick
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(LogUserDetailViewModel::class.java)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_log_user)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_log_user_detail)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         title = "Log"

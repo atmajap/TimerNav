@@ -27,19 +27,19 @@ class UserDetailAdapter(val context: Context, logList: ArrayList<LogDetail>,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
         val itemBinding : ItemLogUserDetailBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_log_user_detail , parent, false)
-        return UserViewHolder(itemBinding)
+        return UserDetailViewHolder(itemBinding)
     }
 
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        val holder = viewHolder as UserViewHolder
+        val holder = viewHolder as UserDetailViewHolder
         holder.bindView(data[position])
         holder.itemView.setOnClickListener { listener.onUserClick(data[position]) }
     }
 }
 
-class UserViewHolder(private val itemBinding: ItemLogUserDetailBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+class UserDetailViewHolder(private val itemBinding: ItemLogUserDetailBinding) : RecyclerView.ViewHolder(itemBinding.root) {
 
     fun bindView(item: LogDetail) {
         itemBinding.tvDate.text = item.date
