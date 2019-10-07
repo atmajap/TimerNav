@@ -93,10 +93,7 @@ class DataBaseHandler : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     fun getUserData(date: String): ArrayList<User> {
         val db = this.writableDatabase
         var arrayOfUser = arrayListOf<User>()
-        val result = db.rawQuery(
-            "SELECT * FROM $TABLE_NAME GROUP BY $COL_USERID WHERE $COL_DATE = $date",
-            null
-        )
+        val result = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_DATE = '$date' ORDER BY $COL_USERID",null)
         result?.let {
             it.moveToFirst()?.let {
                 do {

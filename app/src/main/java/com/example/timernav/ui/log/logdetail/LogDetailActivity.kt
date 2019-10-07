@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.timernav.R
 import com.example.timernav.databinding.ActivityLogDetailBinding
-import kotlinx.android.synthetic.main.activity_log_user.*
+import kotlinx.android.synthetic.main.activity_log_user_detail.*
 
 class LogDetailActivity : AppCompatActivity() {
 

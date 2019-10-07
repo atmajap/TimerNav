@@ -35,7 +35,7 @@
             android:paddingBottom="20dp"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
-            tools:showIn="@layout/activity_log_user">
+            tools:showIn="@layout/activity_log_user_detail">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_userid"
