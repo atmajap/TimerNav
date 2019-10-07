@@ -3,9 +3,10 @@ package com.example.timerretrofit
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.timernav.utils.AppAplication
+import android.widget.Toast
+import com.example.timernav.utils.AppAplication.Companion.context
 
-class DataBaseHandler : SQLiteOpenHelper(AppAplication.context, DATABASE_NAME, null, 1) {
+class DataBaseHandler : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
 
     companion object {
         val DATABASE_NAME = "MyDB"
@@ -54,10 +55,10 @@ class DataBaseHandler : SQLiteOpenHelper(AppAplication.context, DATABASE_NAME, n
         cv.put(COL_TIME6, user.time6)
         cv.put(COL_DATE, user.date)
         var result = db.insert(TABLE_NAME, null, cv)
-//        if(result == (-1).toLong())
-//            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
-//        else
-//            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+        if(result == (-1).toLong())
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
+        else
+            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
     }
 
     fun getAllDateData(): ArrayList<String> {
@@ -87,6 +88,63 @@ class DataBaseHandler : SQLiteOpenHelper(AppAplication.context, DATABASE_NAME, n
 
         }
         return arrayOfId
+    }
+
+    fun getUserData(date: String): ArrayList<User> {
+        val db = this.writableDatabase
+        var arrayOfUser = arrayListOf<User>()
+        val result = db.rawQuery(
+            "SELECT * FROM $TABLE_NAME GROUP BY $COL_USERID WHERE $COL_DATE = $date",
+            null
+        )
+        result?.let {
+            it.moveToFirst()?.let {
+                do {
+                    val id = result.getString(result.getColumnIndex(COL_ID)).toInt()
+                    val userId = result.getString(result.getColumnIndex(COL_USERID)).toInt()
+                    val time1 = result.getString(result.getColumnIndex(COL_TIME1)).toString()
+                    val time2 = result.getString(result.getColumnIndex(COL_TIME2)).toString()
+                    val time3 = result.getString(result.getColumnIndex(COL_TIME3)).toString()
+                    val time4 = result.getString(result.getColumnIndex(COL_TIME4)).toString()
+                    val time5 = result.getString(result.getColumnIndex(COL_TIME5)).toString()
+                    val time6 = result.getString(result.getColumnIndex(COL_TIME6)).toString()
+                    val date = result.getString(result.getColumnIndex(COL_DATE)).toString()
+                    var user = User(
+                        id = id, userId = userId, time1 = time1, time2 = time2, time3 = time3,
+                        time4 = time4, time5 = time5, time6 = time6, date = date
+                    )
+                    arrayOfUser.add(user)
+                } while (result.moveToNext())
+            }
+
+        }
+        return arrayOfUser
+    }
+
+        fun getDateData(userId: String): ArrayList<User> {
+            val db = this.writableDatabase
+            var arrayOfUser = arrayListOf<User>()
+            val result = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_USERID = $userId", null)
+            result?.let {
+                it.moveToFirst()?.let {
+                    do {
+                        val id = result.getString(result.getColumnIndex(COL_ID)).toInt()
+                        val userId = result.getString(result.getColumnIndex(COL_USERID)).toInt()
+                        val time1 = result.getString(result.getColumnIndex(COL_TIME1)).toString()
+                        val time2 = result.getString(result.getColumnIndex(COL_TIME2)).toString()
+                        val time3 = result.getString(result.getColumnIndex(COL_TIME3)).toString()
+                        val time4 = result.getString(result.getColumnIndex(COL_TIME4)).toString()
+                        val time5 = result.getString(result.getColumnIndex(COL_TIME5)).toString()
+                        val time6 = result.getString(result.getColumnIndex(COL_TIME6)).toString()
+                        val date = result.getString(result.getColumnIndex(COL_DATE)).toString()
+                        var user = User(id = id, userId =  userId, time1 = time1, time2 = time2,time3 =  time3,
+                            time4 = time4, time5 = time5, time6 = time6, date = date)
+                        arrayOfUser.add(user)
+                    } while (result.moveToNext())
+                }
+
+            }
+            return arrayOfUser
     }
 
     fun readData() : MutableList<User> {
