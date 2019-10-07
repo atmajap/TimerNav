@@ -2,7 +2,6 @@ package com.example.timernav.ui.log.user
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -13,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.timernav.model.LogDetail
+import com.example.timernav.ui.log.logdetail.LogDetailActivity
 
 
 class LogUserDetailActivity : AppCompatActivity(), UserDetailAdapter.OnUserClickListener {
@@ -22,19 +22,18 @@ class LogUserDetailActivity : AppCompatActivity(), UserDetailAdapter.OnUserClick
     private lateinit var binding : ActivityLogUserBinding
 
     override fun onUserClick(item: LogDetail) {
-        Log.d("hehe clicked", "yeay")
-//        val intent = Intent(this, LogUserDetailActivity::class.java)
-//        intent.putExtra("id", item.id)
-//        intent.putExtra("userId", item.userId)
-//        intent.putExtra("date", item.date)
-//        intent.putExtra("time1", item.time1)
-//        intent.putExtra("time2", item.time2)
-//        intent.putExtra("time3", item.time3)
-//        intent.putExtra("time4", item.time4)
-//        intent.putExtra("time5", item.time5)
-//        intent.putExtra("time6", item.time6)
-//        intent.putExtra("sequence", item.sequence)
-//        startActivity(intent)
+        val intent = Intent(this, LogDetailActivity::class.java)
+        intent.putExtra("id", item.id)
+        intent.putExtra("userId", item.userId)
+        intent.putExtra("date", item.date)
+        intent.putExtra("time1", item.time1)
+        intent.putExtra("time2", item.time2)
+        intent.putExtra("time3", item.time3)
+        intent.putExtra("time4", item.time4)
+        intent.putExtra("time5", item.time5)
+        intent.putExtra("time6", item.time6)
+        intent.putExtra("sequence", item.sequence)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

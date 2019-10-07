@@ -15,9 +15,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.log.user.LogUserDetailActivity"
-            android:label="@string/title_activity_log_user"
+            android:name=".ui.log.logdetail.LogDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.log.user.LogUserDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
