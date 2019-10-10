@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.timernav.R
 import com.example.timernav.databinding.ActivityLogDetailBinding
+import com.example.timernav.utils.Extensions
 import kotlinx.android.synthetic.main.activity_log_user_detail.*
 
 class LogDetailActivity : AppCompatActivity() {
@@ -31,11 +32,11 @@ class LogDetailActivity : AppCompatActivity() {
     fun initData() {
         binding.tvUseridtext.text = intent.getIntExtra("userId", -1).toString()
         binding.tvDatetext.text = intent.getStringExtra("date")
-        binding.tvLap1text.text = intent.getStringExtra("time1")
-        binding.tvLap2text.text = intent.getStringExtra("time2")
-        binding.tvLap3text.text = intent.getStringExtra("time3")
-        binding.tvLap4text.text = intent.getStringExtra("time4")
-        binding.tvLap5text.text = intent.getStringExtra("time5")
-        binding.tvLap6text.text = intent.getStringExtra("time6")
+        binding.tvLap1text.text = Extensions.convertToTime(intent.getStringExtra("time1")?: "")
+        binding.tvLap2text.text = Extensions.convertToTime(intent.getStringExtra("time2")?: "")
+        binding.tvLap3text.text = Extensions.convertToTime(intent.getStringExtra("time3")?: "")
+        binding.tvLap4text.text = Extensions.convertToTime(intent.getStringExtra("time4")?: "")
+        binding.tvLap5text.text = Extensions.convertToTime(intent.getStringExtra("time5")?: "")
+        binding.tvLap6text.text = Extensions.convertToTime(intent.getStringExtra("time6")?: "")
     }
 }

@@ -29,11 +29,7 @@ class UserAdapter(val context: Context, userList: ArrayList<String>,
         return UserViewHolder(itemBinding)
     }
 
-    override fun getItemCount(): Int = if (data.size == 0) {
-        1
-    } else {
-        data.size
-    }
+    override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val holder = viewHolder as UserViewHolder

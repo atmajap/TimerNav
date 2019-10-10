@@ -30,7 +30,12 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private var callClicked = 0
-
+    private var lap1 = ""
+    private var lap2 = ""
+    private var lap3 = ""
+    private var lap4 = ""
+    private var lap5 = ""
+    private var lap6 = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,16 +84,24 @@ class HomeFragment : Fragment() {
 
                         for (post in posts!!) {
                             when (post.id) {
-                                1 -> lap1Result_text?.append(post.time.toString())
-                                2 -> lap2Result_text?.append(post.time.toString())
-                                3 -> lap3Result_text?.append(post.time.toString())
-                                4 -> lap4Result_text?.append(post.time.toString())
-                                5 -> lap5Result_text?.append(post.time.toString())
-                                6 -> lap6Result_text?.append(post.time.toString())
+                                //TODO: change random number to real data
+                                1 -> lap1 = "20413"
+                                2 -> lap2 = "12389"
+                                3 -> lap3 = "15673"
+                                4 -> lap4 = "24879"
+                                5 -> lap5 = "684297"
+                                6 -> lap6 = "532908"
                                 else -> {
                                 }
                             }
                         }
+
+                        lap1Result_text?.append(Extensions.convertToTime(lap1))
+                        lap2Result_text?.append(Extensions.convertToTime(lap2))
+                        lap3Result_text?.append(Extensions.convertToTime(lap3))
+                        lap4Result_text?.append(Extensions.convertToTime(lap4))
+                        lap5Result_text?.append(Extensions.convertToTime(lap5))
+                        lap6Result_text?.append(Extensions.convertToTime(lap6))
                     }
 
                     override fun onFailure(call: Call<List<Post>>, t: Throwable) {
@@ -124,10 +137,10 @@ class HomeFragment : Fragment() {
                     val date = outputFormat.format(Date())
 
                     var user = User(
-                        userId = idNumber.text.toString().toInt(), time1 = lap1Result_text?.text.toString(),
-                        time2 = lap2Result_text?.text.toString(), time3 = lap3Result_text?.text.toString(),
-                        time4 = lap4Result_text?.text.toString(), time5 = lap5Result_text?.text.toString(),
-                        time6 = lap6Result_text?.text.toString(), date = date
+                        userId = idNumber.text.toString().toInt(), time1 = lap1,
+                        time2 = lap2, time3 = lap3,
+                        time4 = lap4, time5 = lap5,
+                        time6 = lap6, date = date
                     )
                     var db = DataBaseHandler()
                     db.insertData(user)

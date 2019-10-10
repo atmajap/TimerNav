@@ -66,10 +66,12 @@ class DataBaseHandler : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
         var arrayOfDate = arrayListOf<String>()
         val result = db.rawQuery("SELECT $COL_DATE FROM $TABLE_NAME GROUP BY $COL_DATE", null)
         result?.let {
-            it.moveToFirst()?.let {
-                do {
-                    arrayOfDate.add(result.getString(result.getColumnIndex(COL_DATE)))
-                } while (result.moveToNext())
+            if (result.count != 0) {
+                it.moveToFirst()?.let {
+                    do {
+                        arrayOfDate.add(result.getString(result.getColumnIndex(COL_DATE)))
+                    } while (result.moveToNext())
+                }
             }
         }
         return arrayOfDate
@@ -80,12 +82,13 @@ class DataBaseHandler : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
         var arrayOfId = arrayListOf<String>()
         val result = db.rawQuery("SELECT $COL_USERID FROM $TABLE_NAME GROUP BY $COL_USERID", null)
         result?.let {
-            it.moveToFirst()?.let {
-                do {
-                    arrayOfId.add(result.getString(result.getColumnIndex(COL_USERID)))
-                } while (result.moveToNext())
+            if (result.count != 0) {
+                it.moveToFirst()?.let {
+                    do {
+                        arrayOfId.add(result.getString(result.getColumnIndex(COL_USERID)))
+                    } while (result.moveToNext())
+                }
             }
-
         }
         return arrayOfId
     }
@@ -95,34 +98,7 @@ class DataBaseHandler : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
         var arrayOfUser = arrayListOf<User>()
         val result = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_DATE = '$date' ORDER BY $COL_USERID",null)
         result?.let {
-            it.moveToFirst()?.let {
-                do {
-                    val id = result.getString(result.getColumnIndex(COL_ID)).toInt()
-                    val userId = result.getString(result.getColumnIndex(COL_USERID)).toInt()
-                    val time1 = result.getString(result.getColumnIndex(COL_TIME1)).toString()
-                    val time2 = result.getString(result.getColumnIndex(COL_TIME2)).toString()
-                    val time3 = result.getString(result.getColumnIndex(COL_TIME3)).toString()
-                    val time4 = result.getString(result.getColumnIndex(COL_TIME4)).toString()
-                    val time5 = result.getString(result.getColumnIndex(COL_TIME5)).toString()
-                    val time6 = result.getString(result.getColumnIndex(COL_TIME6)).toString()
-                    val date = result.getString(result.getColumnIndex(COL_DATE)).toString()
-                    var user = User(
-                        id = id, userId = userId, time1 = time1, time2 = time2, time3 = time3,
-                        time4 = time4, time5 = time5, time6 = time6, date = date
-                    )
-                    arrayOfUser.add(user)
-                } while (result.moveToNext())
-            }
-
-        }
-        return arrayOfUser
-    }
-
-        fun getDateData(userId: String): ArrayList<User> {
-            val db = this.writableDatabase
-            var arrayOfUser = arrayListOf<User>()
-            val result = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_USERID = $userId", null)
-            result?.let {
+            if (result.count != 0) {
                 it.moveToFirst()?.let {
                     do {
                         val id = result.getString(result.getColumnIndex(COL_ID)).toInt()
@@ -134,43 +110,57 @@ class DataBaseHandler : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
                         val time5 = result.getString(result.getColumnIndex(COL_TIME5)).toString()
                         val time6 = result.getString(result.getColumnIndex(COL_TIME6)).toString()
                         val date = result.getString(result.getColumnIndex(COL_DATE)).toString()
-                        var user = User(id = id, userId =  userId, time1 = time1, time2 = time2,time3 =  time3,
-                            time4 = time4, time5 = time5, time6 = time6, date = date)
+                        var user = User(
+                            id = id, userId = userId, time1 = time1, time2 = time2, time3 = time3,
+                            time4 = time4, time5 = time5, time6 = time6, date = date
+                        )
                         arrayOfUser.add(user)
                     } while (result.moveToNext())
                 }
-
             }
-            return arrayOfUser
+        }
+        return arrayOfUser
     }
 
-    fun readData() : MutableList<User> {
-        var list : MutableList<User> = ArrayList()
-
-        val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_NAME"
-        val result = db.rawQuery(query, null)
-        if(result.moveToFirst()){
-            do {
-                val id = result.getString(result.getColumnIndex(COL_ID)).toInt()
-                val userId = result.getString(result.getColumnIndex(COL_USERID)).toInt()
-                val time1 = result.getString(result.getColumnIndex(COL_TIME1)).toString()
-                val time2 = result.getString(result.getColumnIndex(COL_TIME2)).toString()
-                val time3 = result.getString(result.getColumnIndex(COL_TIME3)).toString()
-                val time4 = result.getString(result.getColumnIndex(COL_TIME4)).toString()
-                val time5 = result.getString(result.getColumnIndex(COL_TIME5)).toString()
-                val time6 = result.getString(result.getColumnIndex(COL_TIME6)).toString()
-                val date = result.getString(result.getColumnIndex(COL_DATE)).toString()
-                var user = User(id = id, userId =  userId, time1 = time1, time2 = time2,time3 =  time3,
-                    time4 = time4, time5 = time5, time6 = time6, date = date)
-                list.add(user)
-
-            } while (result.moveToNext())
-        }
-
-        result.close()
-        db.close()
-
-        return list
+        fun getDateData(userId: String): ArrayList<User> {
+            val db = this.writableDatabase
+            var arrayOfUser = arrayListOf<User>()
+            val result = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_USERID = $userId", null)
+            result?.let {
+                if (result.count != 0) {
+                    it.moveToFirst()?.let {
+                        do {
+                            val id = result.getString(result.getColumnIndex(COL_ID)).toInt()
+                            val userId = result.getString(result.getColumnIndex(COL_USERID)).toInt()
+                            val time1 =
+                                result.getString(result.getColumnIndex(COL_TIME1)).toString()
+                            val time2 =
+                                result.getString(result.getColumnIndex(COL_TIME2)).toString()
+                            val time3 =
+                                result.getString(result.getColumnIndex(COL_TIME3)).toString()
+                            val time4 =
+                                result.getString(result.getColumnIndex(COL_TIME4)).toString()
+                            val time5 =
+                                result.getString(result.getColumnIndex(COL_TIME5)).toString()
+                            val time6 =
+                                result.getString(result.getColumnIndex(COL_TIME6)).toString()
+                            val date = result.getString(result.getColumnIndex(COL_DATE)).toString()
+                            var user = User(
+                                id = id,
+                                userId = userId,
+                                time1 = time1,
+                                time2 = time2,
+                                time3 = time3,
+                                time4 = time4,
+                                time5 = time5,
+                                time6 = time6,
+                                date = date
+                            )
+                            arrayOfUser.add(user)
+                        } while (result.moveToNext())
+                    }
+                }
+            }
+            return arrayOfUser
     }
 }
