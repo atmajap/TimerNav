@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="8dp"
     tools:context=".MainActivity"
-    android:background="#4a4a4a">
+    android:background="@color/backgroundGrey">
 
     <TextView
         android:text="@string/lap1_text"
@@ -58,7 +58,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/lap1Result_text" style="@style/LapStyle"
+        android:id="@+id/lap1Result_text" style="@style/LapStyleRight"
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/lap2Result_text"
         app:layout_constraintStart_toEndOf="@+id/lap1_text" app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintEnd_toEndOf="parent" android:hapticFeedbackEnabled="false"
@@ -66,7 +66,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/lap2Result_text" style="@style/LapStyle"
+        android:id="@+id/lap2Result_text" style="@style/LapStyleRight"
         app:layout_constraintTop_toBottomOf="@+id/lap1Result_text"
         app:layout_constraintBottom_toTopOf="@+id/lap3Result_text"
         app:layout_constraintStart_toEndOf="@+id/lap2_text"
@@ -75,7 +75,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/lap3Result_text" style="@style/LapStyle"
+        android:id="@+id/lap3Result_text" style="@style/LapStyleRight"
         app:layout_constraintTop_toBottomOf="@+id/lap2Result_text"
         app:layout_constraintBottom_toTopOf="@+id/lap4Result_text"
         app:layout_constraintStart_toEndOf="@+id/lap3_text"
@@ -84,7 +84,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/lap4Result_text" style="@style/LapStyle"
+        android:id="@+id/lap4Result_text" style="@style/LapStyleRight"
         app:layout_constraintTop_toBottomOf="@+id/lap3Result_text"
         app:layout_constraintBottom_toTopOf="@+id/lap5Result_text"
         app:layout_constraintStart_toEndOf="@+id/lap4_text"
@@ -93,7 +93,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/lap5Result_text" style="@style/LapStyle"
+        android:id="@+id/lap5Result_text" style="@style/LapStyleRight"
         app:layout_constraintTop_toBottomOf="@+id/lap4Result_text"
         app:layout_constraintBottom_toTopOf="@+id/lap6Result_text"
         app:layout_constraintStart_toEndOf="@+id/lap5_text"
@@ -102,7 +102,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/lap6Result_text" style="@style/LapStyle"
+        android:id="@+id/lap6Result_text" style="@style/LapStyleRight"
         app:layout_constraintTop_toBottomOf="@+id/lap5Result_text"
         app:layout_constraintStart_toEndOf="@+id/lap6_text" app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintEnd_toEndOf="parent"

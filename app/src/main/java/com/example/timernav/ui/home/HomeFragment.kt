@@ -2,35 +2,40 @@ package com.example.timernav.ui.home
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.timernav.R
+import com.example.timernav.utils.Extensions
 import com.example.timerretrofit.DataBaseHandler
 import com.example.timerretrofit.Post
 import com.example.timerretrofit.User
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.custom_dialog.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-
+    private var callClicked = 0
+    private var lap1 = ""
+    private var lap2 = ""
+    private var lap3 = ""
+    private var lap4 = ""
+    private var lap5 = ""
+    private var lap6 = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,66 +55,75 @@ class HomeFragment : Fragment() {
         val call = jsonPlaceHolderApi.posts
 
         root.call_button.setOnClickListener {
-            lap1Result_text!!.text = ""
-            lap2Result_text!!.text = ""
-            lap3Result_text!!.text = ""
-            lap4Result_text!!.text = ""
-            lap5Result_text!!.text = ""
-            lap6Result_text!!.text = ""
-            call.clone().enqueue(object : Callback<List<Post>> {
-                override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+            if (callClicked == 0) {
+                callClicked = 1
+                lap1Result_text?.text = ""
+                lap2Result_text?.text = ""
+                lap3Result_text?.text = ""
+                lap4Result_text?.text = ""
+                lap5Result_text?.text = ""
+                lap6Result_text?.text = ""
+                call.clone().enqueue(object : Callback<List<Post>> {
+                    override fun onResponse(
+                        call: Call<List<Post>>,
+                        response: Response<List<Post>>
+                    ) {
+                        callClicked = 0
 
-                    if (!response.isSuccessful) {
-                        lap1Result_text!!.text = "Code : " + response.code()
-                        lap2Result_text!!.text = "Code : " + response.code()
-                        lap3Result_text!!.text = "Code : " + response.code()
-                        lap4Result_text!!.text = "Code : " + response.code()
-                        lap5Result_text!!.text = "Code : " + response.code()
-                        lap6Result_text!!.text = "Code : " + response.code()
-                        return
-                    }
+                        if (!response.isSuccessful) {
+                            lap1Result_text?.text = "Code : ${response.code()}"
+                            lap2Result_text?.text = "Code : ${response.code()}"
+                            lap3Result_text?.text = "Code : ${response.code()}"
+                            lap4Result_text?.text = "Code : ${response.code()}"
+                            lap5Result_text?.text = "Code : ${response.code()}"
+                            lap6Result_text?.text = "Code : ${response.code()}"
+                            return
+                        }
 
-                    val posts = response.body()
+                        val posts = response.body()
 
-                    for (post in posts!!) {
-                        /*var content = ""
-                        content += "userId: " + post.userId + "\n"
-                        content += "id: " + post.id + "\n\n"
-                        content += "title: " + post.title + "\n"
-                        content += "body: " + post.body + "\n\n"*/
-                        when (post.id) {
-                            1 -> lap1Result_text!!.append(post.time.toString())
-                            2 -> lap2Result_text!!.append(post.time.toString())
-                            3 -> lap3Result_text!!.append(post.time.toString())
-                            4 -> lap4Result_text!!.append(post.time.toString())
-                            5 -> lap5Result_text!!.append(post.time.toString())
-                            6 -> lap6Result_text!!.append(post.time.toString())
-                            else -> {
+                        for (post in posts!!) {
+                            when (post.id) {
+                                //TODO: change random number to real data
+                                1 -> lap1 = "20413"
+                                2 -> lap2 = "12389"
+                                3 -> lap3 = "15673"
+                                4 -> lap4 = "24879"
+                                5 -> lap5 = "684297"
+                                6 -> lap6 = "532908"
+                                else -> {
+                                }
                             }
                         }
+
+                        lap1Result_text?.append(Extensions.convertToTime(lap1))
+                        lap2Result_text?.append(Extensions.convertToTime(lap2))
+                        lap3Result_text?.append(Extensions.convertToTime(lap3))
+                        lap4Result_text?.append(Extensions.convertToTime(lap4))
+                        lap5Result_text?.append(Extensions.convertToTime(lap5))
+                        lap6Result_text?.append(Extensions.convertToTime(lap6))
                     }
-                }
 
-                override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-                    lap1Result_text!!.text = t.message
-                    lap2Result_text!!.text = t.message
-                    lap3Result_text!!.text = t.message
-                    lap4Result_text!!.text = t.message
-                    lap5Result_text!!.text = t.message
-                    lap6Result_text!!.text = t.message
-                }
+                    override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                        callClicked = 0
+                        lap1Result_text?.text = t.message
+                        lap2Result_text?.text = t.message
+                        lap3Result_text?.text = t.message
+                        lap4Result_text?.text = t.message
+                        lap5Result_text?.text = t.message
+                        lap6Result_text?.text = t.message
+                    }
 
-            })
+                })
+            }
         }
 
-        root.save_button.setOnClickListener() {
+
+        root.save_button.setOnClickListener {
             val context = root.context
             val dialog = AlertDialog.Builder(context)
             val dialogView = layoutInflater.inflate(R.layout.custom_dialog, null)
             val idNumber = dialogView.findViewById<EditText>(R.id.id_number)
-
-            val currentTimestamp = Timestamp(System.currentTimeMillis())
-
             dialog.setView(dialogView)
             dialog.setCancelable(true)
             dialog.setPositiveButton("validate", { dialogInterface: DialogInterface, i: Int -> })
@@ -117,18 +131,24 @@ class HomeFragment : Fragment() {
             customDialog.show()
             customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 if (idNumber.text.length > 5) {
+
+                    val outputPattern = "dd-MMM-yyyy"
+                    val outputFormat = SimpleDateFormat(outputPattern)
+                    val date = outputFormat.format(Date())
+
                     var user = User(
-                        idNumber.text.toString().toInt(), lap1Result_text!!.text.toString(),
-                        lap2Result_text!!.text.toString(), lap3Result_text!!.text.toString(),
-                        lap4Result_text!!.text.toString(), lap5Result_text!!.text.toString(),
-                        lap6Result_text!!.text.toString(), currentTimestamp.toString()
+                        userId = idNumber.text.toString().toInt(), time1 = lap1,
+                        time2 = lap2, time3 = lap3,
+                        time4 = lap4, time5 = lap5,
+                        time6 = lap6, date = date
                     )
-                    var db = DataBaseHandler(context)
+                    var db = DataBaseHandler()
                     db.insertData(user)
                     customDialog.dismiss()
                 } else
-                    Toast.makeText(activity!!.baseContext, "ID not valid", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity?.baseContext, "ID not valid", Toast.LENGTH_SHORT).show()
             }
+
         }
 
         return root

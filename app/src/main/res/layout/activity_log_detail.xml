@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.log.user.LogUserDetailActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/log_user_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.AppBarOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".ui.log.user.LogUserDetailActivity"
+            android:background="@color/backgroundGrey"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            tools:showIn="@layout/activity_log_user_detail">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_userid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_userid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_id"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="24sp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/tv_useridtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-1"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/white"
+                    android:layout_marginLeft="20dp"
+                    app:layout_constraintLeft_toRightOf="@id/tv_userid"
+                    app:layout_constraintTop_toTopOf="@id/tv_userid"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_userid"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cl_userid"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="24sp"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/tv_datetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="26 - 07 - 1997"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/white"
+                    android:layout_marginLeft="20dp"
+                    app:layout_constraintLeft_toRightOf="@id/tv_date"
+                    app:layout_constraintTop_toTopOf="@id/tv_date"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_date"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_lap1"
+                android:text="@string/lap1_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/LapStyle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_date"/>
+
+            <TextView
+                android:id="@+id/tv_lap1text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LapStyleRight"
+                android:layout_marginRight="10dp"
+                app:layout_constraintLeft_toRightOf="@id/tv_lap1"
+                app:layout_constraintTop_toTopOf="@id/tv_lap1"
+                app:layout_constraintBottom_toBottomOf="@id/tv_lap1"
+                app:layout_constraintRight_toRightOf="parent"
+                android:hapticFeedbackEnabled="false" />
+
+            <TextView
+                android:id="@+id/tv_lap2"
+                android:text="@string/lap2_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/LapStyle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_lap1"/>
+
+            <TextView
+                android:id="@+id/tv_lap2text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LapStyleRight"
+                android:layout_marginRight="10dp"
+                app:layout_constraintLeft_toRightOf="@id/tv_lap2"
+                app:layout_constraintTop_toTopOf="@id/tv_lap2"
+                app:layout_constraintBottom_toBottomOf="@id/tv_lap2"
+                app:layout_constraintRight_toRightOf="parent"
+                android:hapticFeedbackEnabled="false" />
+
+            <TextView
+                android:id="@+id/tv_lap3"
+                android:text="@string/lap3_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/LapStyle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_lap2"/>
+
+            <TextView
+                android:id="@+id/tv_lap3text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LapStyleRight"
+                android:layout_marginRight="10dp"
+                app:layout_constraintLeft_toRightOf="@id/tv_lap3"
+                app:layout_constraintTop_toTopOf="@id/tv_lap3"
+                app:layout_constraintBottom_toBottomOf="@id/tv_lap3"
+                app:layout_constraintRight_toRightOf="parent"
+                android:hapticFeedbackEnabled="false" />
+
+            <TextView
+                android:id="@+id/tv_lap4"
+                android:text="@string/lap4_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/LapStyle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_lap3"/>
+
+            <TextView
+                android:id="@+id/tv_lap4text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LapStyleRight"
+                android:layout_marginRight="10dp"
+                app:layout_constraintLeft_toRightOf="@id/tv_lap4"
+                app:layout_constraintTop_toTopOf="@id/tv_lap4"
+                app:layout_constraintBottom_toBottomOf="@id/tv_lap4"
+                app:layout_constraintRight_toRightOf="parent"
+                android:hapticFeedbackEnabled="false" />
+
+            <TextView
+                android:id="@+id/tv_lap5"
+                android:text="@string/lap5_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/LapStyle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_lap4"/>
+
+            <TextView
+                android:id="@+id/tv_lap5text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LapStyleRight"
+                android:layout_marginRight="10dp"
+                app:layout_constraintLeft_toRightOf="@id/tv_lap5"
+                app:layout_constraintTop_toTopOf="@id/tv_lap5"
+                app:layout_constraintBottom_toBottomOf="@id/tv_lap5"
+                app:layout_constraintRight_toRightOf="parent"
+                android:hapticFeedbackEnabled="false" />
+
+            <TextView
+                android:id="@+id/tv_lap6"
+                android:text="@string/lap6_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/LapStyle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_lap5"/>
+
+            <TextView
+                android:id="@+id/tv_lap6text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LapStyleRight"
+                android:layout_marginRight="10dp"
+                app:layout_constraintLeft_toRightOf="@id/tv_lap6"
+                app:layout_constraintTop_toTopOf="@id/tv_lap6"
+                app:layout_constraintBottom_toBottomOf="@id/tv_lap6"
+                app:layout_constraintRight_toRightOf="parent"
+                android:hapticFeedbackEnabled="false" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

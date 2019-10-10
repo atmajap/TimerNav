@@ -6,36 +6,61 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.timernav.databinding.FragmentLogBinding
+import androidx.fragment.app.FragmentManager
+import androidx.viewpager.widget.ViewPager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.example.timernav.R
-import com.example.timerretrofit.DataBaseHandler
-import kotlinx.android.synthetic.main.fragment_log.view.*
+import com.google.android.material.tabs.TabLayout
 
 class LogFragment : Fragment() {
 
     private lateinit var logViewModel: LogViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        logViewModel =
-            ViewModelProviders.of(this).get(LogViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_log, container, false)
-        val context = root.context
-        var db = DataBaseHandler(context)
-        root.text_log.text = ""
-        var data = db.readData()
-        for (i in 0..data.size-1){
-            root.text_log.append(data.get(i).id.toString() + " " + data.get(i).userId.toString() + " "
-            + data.get(i).time1 + " " + data.get(i).time2 + " " + data.get(i).time3 + " " + data.get(i).time4 + " "
-            + data.get(i).time5 + " " + data.get(i).time6 + " " + data.get(i).timestamp + "\n")
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        logViewModel = ViewModelProviders.of(this).get(LogViewModel::class.java)
+
+        val binding = FragmentLogBinding.inflate(layoutInflater, container, false)
+        val view = binding.root
+
+        setupViewPager(binding.viewpager)
+        val tabs = binding.resultTabs
+        tabs.setupWithViewPager(binding.viewpager)
+
+        tabs.tabGravity = TabLayout.GRAVITY_FILL
+        tabs.tabMode = TabLayout.MODE_FIXED
+        return view
+    }
+
+    // Add Fragments to Tabs
+    private fun setupViewPager(viewPager: ViewPager) {
+        val adapter = Adapter(childFragmentManager)
+        adapter.addFragment(LogUserFragment(), getString(R.string.logfragment_tab1_title))
+        adapter.addFragment(LogDateFragment(), getString(R.string.logfragment_tab2_title))
+        viewPager.adapter = adapter
+    }
+
+    internal class Adapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+        private val mFragmentList : ArrayList<Fragment> = arrayListOf()
+        private val mFragmentTitleList : ArrayList<String> = arrayListOf()
+
+        override fun getItem(position: Int): Fragment {
+            return mFragmentList.get(position)
         }
 
-//        val textView: TextView = root.findViewById(R.id.text_slideshow)
-//        logViewModel.text.observe(this, Observer {
-//            textView.text = it
-//        })
-        return root
+        override fun getCount(): Int {
+            return mFragmentList.size
+        }
+
+        fun addFragment(fragment: Fragment, title: String) {
+            mFragmentList.add(fragment)
+            mFragmentTitleList.add(title)
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return mFragmentTitleList.get(position)
+        }
     }
 }
+
+
