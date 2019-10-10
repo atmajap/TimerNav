@@ -1,5 +1,17 @@
 package com.example.timernav.utils
 
-class Extensions {
+import java.text.SimpleDateFormat
+import java.util.*
 
+
+class Extensions {
+    companion object {
+        fun convertToTime(millisInString: String) : String {
+
+            val date = Date(millisInString.toLong())
+            val formatter = SimpleDateFormat("mm:ss:SSS")
+            formatter.timeZone = TimeZone.getTimeZone("UTC")
+            return formatter.format(date)
+        }
+    }
 }

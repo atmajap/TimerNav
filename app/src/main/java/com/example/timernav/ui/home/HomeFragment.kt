@@ -2,6 +2,7 @@ package com.example.timernav.ui.home
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.timernav.R
+import com.example.timernav.utils.Extensions
 import com.example.timerretrofit.DataBaseHandler
 import com.example.timerretrofit.Post
 import com.example.timerretrofit.User
@@ -48,7 +50,6 @@ class HomeFragment : Fragment() {
         val call = jsonPlaceHolderApi.posts
 
         root.call_button.setOnClickListener {
-
             if (callClicked == 0) {
                 callClicked = 1
                 lap1Result_text?.text = ""
@@ -103,6 +104,7 @@ class HomeFragment : Fragment() {
                 })
             }
         }
+
 
         root.save_button.setOnClickListener {
             val context = root.context
