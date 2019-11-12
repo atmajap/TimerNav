@@ -238,6 +238,16 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:hapticFeedbackEnabled="false" />
 
+            <Button
+                android:id="@+id/btn_chart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_lap6"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="20dp"
+                android:text="Chart"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

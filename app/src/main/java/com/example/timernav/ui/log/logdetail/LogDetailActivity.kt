@@ -1,12 +1,16 @@
 package com.example.timernav.ui.log.logdetail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.timernav.R
 import com.example.timernav.databinding.ActivityLogDetailBinding
+import com.example.timernav.ui.log.chart.LogChartActivity
 import com.example.timernav.utils.Extensions
+import kotlinx.android.synthetic.main.activity_log_detail.*
 import kotlinx.android.synthetic.main.activity_log_user_detail.*
+import kotlinx.android.synthetic.main.activity_log_user_detail.log_user_toolbar
 
 class LogDetailActivity : AppCompatActivity() {
 
@@ -27,6 +31,8 @@ class LogDetailActivity : AppCompatActivity() {
             onBackPressed()
         }
         initData()
+
+        btn_chart.setOnClickListener { onChartBtnClick() }
     }
 
     fun initData() {
@@ -38,5 +44,16 @@ class LogDetailActivity : AppCompatActivity() {
         binding.tvLap4text.text = Extensions.convertToTime(intent.getStringExtra("time4")?: "")
         binding.tvLap5text.text = Extensions.convertToTime(intent.getStringExtra("time5")?: "")
         binding.tvLap6text.text = Extensions.convertToTime(intent.getStringExtra("time6")?: "")
+    }
+
+    fun onChartBtnClick() {
+        val sendIntent = Intent(this, LogChartActivity::class.java)
+        sendIntent.putExtra("time1", intent.getStringExtra("time1"))
+        sendIntent.putExtra("time2", intent.getStringExtra("time2"))
+        sendIntent.putExtra("time3", intent.getStringExtra("time3"))
+        sendIntent.putExtra("time4", intent.getStringExtra("time4"))
+        sendIntent.putExtra("time5", intent.getStringExtra("time5"))
+        sendIntent.putExtra("time6", intent.getStringExtra("time6"))
+        startActivity(sendIntent)
     }
 }
