@@ -46,6 +46,7 @@ class LogChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         val optionList: ArrayList<String> = ArrayList()
         optionList.add("By Time")
         optionList.add("By Velocity")
+        optionList.add("By Acceleration")
 
         binding.chartSpinner.adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, optionList)
 
@@ -58,11 +59,20 @@ class LogChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
                 if (position == 0) {
                     binding.chart1.visibility = View.VISIBLE
                     binding.chart2.visibility = View.GONE
-                    createChart(binding.chart1, time1, time2, time3, time4, time5, time6)
-                } else {
+                    binding.chart3.visibility = View.GONE
+                    createChart(binding.chart1, time1/1000, time2/1000, time3/1000, time4/1000, time5/1000, time6/1000)
+                }
+                else if (position == 1){
                     binding.chart1.visibility = View.GONE
                     binding.chart2.visibility = View.VISIBLE
-                    createChart(binding.chart2, (10/time1), (20/time2), (30/time3), (40/time4), (50/time5), (60/time6))
+                    binding.chart3.visibility = View.GONE
+                    createChart(binding.chart2, (10/time1*1000), (10/(time2-time1)*1000), (10/(time3-time2)*1000), (10/(time4-time3)*1000), (10/(time5-time4)*1000), (10/(time6-time5)*1000))
+                }
+                else{
+                    binding.chart1.visibility = View.GONE
+                    binding.chart2.visibility = View.GONE
+                    binding.chart3.visibility = View.VISIBLE
+                    createChart(binding.chart3, ((10/time1*1000)/(time1/1000)), ((10/(time2-time1)*1000)/((time2-time1)/1000)), ((10/(time3-time2)*1000)/((time3-time2)/1000)), ((10/(time4-time3)*1000)/((time4-time3)/1000)), ((10/(time5-time4)*1000)/((time5-time4)/1000)), ((10/(time6-time5)*1000)/((time6-time5)/1000)))
                 }
             }
         }
@@ -88,6 +98,7 @@ class LogChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         // force pinch zoom along both axis
         chart.setPinchZoom(true)
         val yValues = ArrayList<Entry>()
+        yValues.add(Entry(0f, 0f))
         yValues.add(Entry(10f, y1))
         yValues.add(Entry(20f, y2))
         yValues.add(Entry(30f, y3))
