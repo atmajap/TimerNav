@@ -85,12 +85,12 @@ class HomeFragment : Fragment() {
                         for (post in posts!!) {
                             when (post.id) {
                                 //TODO: change random number to real data
-                                1 -> lap1 = "20413"
-                                2 -> lap2 = "12389"
-                                3 -> lap3 = "15673"
-                                4 -> lap4 = "24879"
-                                5 -> lap5 = "684297"
-                                6 -> lap6 = "532908"
+                                1 -> lap1 = post.time.toString()
+                                2 -> lap2 = post.time.toString()
+                                3 -> lap3 = post.time.toString()
+                                4 -> lap4 = post.time.toString()
+                                5 -> lap5 = post.time.toString()
+                                6 -> lap6 = post.time.toString()
                                 else -> {
                                 }
                             }
