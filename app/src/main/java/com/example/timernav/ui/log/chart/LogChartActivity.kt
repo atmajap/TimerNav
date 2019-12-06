@@ -59,20 +59,20 @@ class LogChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
                 if (position == 0) {
                     binding.chart1.visibility = View.VISIBLE
                     binding.chart2.visibility = View.GONE
-                    binding.chart3.visibility = View.GONE
+//                    binding.chart3.visibility = View.GONE
                     createChart(binding.chart1, time1/1000, time2/1000, time3/1000, time4/1000, time5/1000, time6/1000)
                 }
                 else if (position == 1){
                     binding.chart1.visibility = View.GONE
                     binding.chart2.visibility = View.VISIBLE
-                    binding.chart3.visibility = View.GONE
+//                    binding.chart3.visibility = View.GONE
                     createChart(binding.chart2, (10/time1*1000), (10/(time2-time1)*1000), (10/(time3-time2)*1000), (10/(time4-time3)*1000), (10/(time5-time4)*1000), (10/(time6-time5)*1000))
                 }
                 else{
                     binding.chart1.visibility = View.GONE
                     binding.chart2.visibility = View.GONE
-                    binding.chart3.visibility = View.VISIBLE
-                    createChart(binding.chart3, ((10/time1*1000)/(time1/1000)), ((10/(time2-time1)*1000)/((time2-time1)/1000)), ((10/(time3-time2)*1000)/((time3-time2)/1000)), ((10/(time4-time3)*1000)/((time4-time3)/1000)), ((10/(time5-time4)*1000)/((time5-time4)/1000)), ((10/(time6-time5)*1000)/((time6-time5)/1000)))
+//                    binding.chart3.visibility = View.VISIBLE
+//                    createChart(binding.chart3, ((10/time1*1000)/(time1/1000)), ((10/(time2-time1)*1000)/((time2-time1)/1000)), ((10/(time3-time2)*1000)/((time3-time2)/1000)), ((10/(time4-time3)*1000)/((time4-time3)/1000)), ((10/(time5-time4)*1000)/((time5-time4)/1000)), ((10/(time6-time5)*1000)/((time6-time5)/1000)))
                 }
             }
         }

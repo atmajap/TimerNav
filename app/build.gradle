@@ -54,7 +54,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'androidx.recyclerview:recyclerview'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
+    implementation 'com.opencsv:opencsv:4.6'
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     testImplementation 'junit:junit:4.12'
