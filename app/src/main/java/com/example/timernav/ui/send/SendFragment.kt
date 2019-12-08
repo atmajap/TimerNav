@@ -3,7 +3,10 @@ package com.example.timernav.ui.send
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -12,12 +15,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.timernav.BuildConfig
 import com.example.timernav.databinding.FragmentSendBinding
 import com.example.timernav.model.LogDetail
 import com.opencsv.CSVWriter
 import kotlinx.android.synthetic.main.fragment_send.*
+import org.apache.commons.lang3.ObjectUtils
+import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.util.*
@@ -101,7 +108,6 @@ class SendFragment : Fragment() {
                 var writer: CSVWriter? = null
                 try {
                     writer = CSVWriter(FileWriter(csv))
-
                     val data = ArrayList<Array<String>>()
                     data.add(
                         arrayOf(
@@ -122,9 +128,9 @@ class SendFragment : Fragment() {
                                 log.time1,
                                 log.time2,
                                 log.time3,
-                                log.time3,
-                                log.time3,
-                                log.time3,
+                                log.time4,
+                                log.time5,
+                                log.time6,
                                 log.date
                             )
                         )
@@ -136,34 +142,22 @@ class SendFragment : Fragment() {
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
+                val fileLocation = File(Environment.getExternalStorageDirectory().absolutePath, "test.csv")
+                val path = FileProvider.getUriForFile(this.context!!, "com.example.timernav.provider", fileLocation)
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.setType("text/html")
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                intent.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>("sendTo@email.com"))
+                intent.putExtra(Intent.EXTRA_CC, arrayOf<String>("CC@email.com"))
+                intent.putExtra(Intent.EXTRA_BCC, arrayOf<String>("BCC@email.com"))
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Email Subject")
+                intent.putExtra(Intent.EXTRA_STREAM, path)
+                startActivity(intent)
             } else {
                 Toast.makeText(context, "No Data", Toast.LENGTH_LONG).show()
             }
         }
 
-/*        val db = DataBaseHandler()
-        val exportDir = File(Environment.getExternalStorageDirectory(), "")
-        if(!exportDir.exists()){
-            exportDir.mkdirs()
-        }
-        val file = File(exportDir,  "test.csv")
-        try{
-            file.createNewFile()
-            val csvWrite = CSVWriter(FileWriter(file))
-
-            csvWrite.writeNext("asd")
-        }
-        val filename = "test.csv"
-        val filelocation = File(Environment.getExternalStorageDirectory().absolutePath, filename)
-        val path = Uri.fromFile(filelocation)*/
-//        val intent = Intent(Intent.ACTION_SEND)
-//        intent.setType("text/html")
-//        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>("sendTo@email.com"))
-//        intent.putExtra(Intent.EXTRA_CC, arrayOf<String>("CC@email.com"))
-//        intent.putExtra(Intent.EXTRA_BCC, arrayOf<String>("BCC@email.com"))
-//        intent.putExtra(Intent.EXTRA_SUBJECT, "Email Subject")
-        //intent.putExtra(Intent.EXTRA_STREAM, path)
-//        startActivity(intent)
         return view
     }
 }

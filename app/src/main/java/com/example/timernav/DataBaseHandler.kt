@@ -10,7 +10,7 @@ import com.example.timernav.utils.Extensions
 class DataBaseHandler : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
 
     companion object {
-        val DATABASE_NAME = "MyDB"
+        val DATABASE_NAME = "TimerNavDB"
         val TABLE_NAME ="Users"
         val COL_ID = "id"
         val COL_USERID = "userId"
