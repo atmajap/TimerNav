@@ -2,6 +2,7 @@ package com.example.timernav.ui.send
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -9,16 +10,23 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.timernav.databinding.FragmentSendBinding
+import com.example.timernav.model.LogDetail
 import com.opencsv.CSVWriter
+import kotlinx.android.synthetic.main.fragment_send.*
 import java.io.FileWriter
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SendFragment : Fragment() {
+
+    val MONTHS = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
     private lateinit var sendViewModel: SendViewModel
 
@@ -33,44 +41,105 @@ class SendFragment : Fragment() {
         val binding = FragmentSendBinding.inflate(layoutInflater, container, false)
         val view = binding.root
 
-        val PERMISSIONS = arrayOf(
+        val permissions = arrayOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
 
-        // Here, thisActivity is the current activity
         if (Build.VERSION.SDK_INT >= 23) {
             if (context!!.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED
             ) {
-                    // No explanation needed, we can request the permission.
-                    ActivityCompat.requestPermissions(activity as Activity, PERMISSIONS, 2)
+                    ActivityCompat.requestPermissions(activity as Activity, permissions, 2)
             } else {
                 // Permission has already been granted
             }
         }
 
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month =   c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        binding.etDateFrom.setOnClickListener {
+            val dpd =
+                context?.let { it1 ->
+                    DatePickerDialog(it1, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                        // Display Selected date in TextView
+                        val monthName = MONTHS[month]
+                        binding.etDateFrom.setText("$dayOfMonth-$monthName-$year")
+                    }, year, month, day)
+                }
+            dpd?.show()
+        }
+
+        binding.etDateTo.setOnClickListener {
+            val dpd2 =
+                context?.let { it1 ->
+                    DatePickerDialog(it1, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                        // Display Selected date in TextView
+                        val monthName = MONTHS[month]
+                        binding.etDateTo.setText("$dayOfMonth-$monthName-$year")
+                    }, year, month, day)
+                }
+            dpd2?.show()
+        }
+
+        var dataDB = ArrayList<LogDetail>()
+        sendViewModel.logList.observe(this, androidx.lifecycle.Observer { arr ->
+            arr?.let {
+                dataDB = arr
+            }
+        })
+
         val csv =
             Environment.getExternalStorageDirectory().absolutePath + "/test.csv"
 
         //by Hiting button csv will create inside phone storage.
-        binding.buttonAdd.setOnClickListener(View.OnClickListener {
-            var writer: CSVWriter? = null
-            try {
-                writer = CSVWriter(FileWriter(csv))
+        binding.btnSend.setOnClickListener{
+            sendViewModel.getData(et_dateFrom.text.toString(), et_dateTo.text.toString())
+            if (dataDB.size != 0) {
+                var writer: CSVWriter? = null
+                try {
+                    writer = CSVWriter(FileWriter(csv))
 
-                val data = ArrayList<Array<String>>()
-                data.add(arrayOf("Country", "Capital"))
-                data.add(arrayOf("India", "New Delhi"))
-                data.add(arrayOf("United States", "Washington D.C"))
-                data.add(arrayOf("Germany", "Berlin"))
+                    val data = ArrayList<Array<String>>()
+                    data.add(
+                        arrayOf(
+                            "User Id",
+                            "Time 1",
+                            "Time 2",
+                            "Time 3",
+                            "Time 4",
+                            "Time 5",
+                            "Time 6",
+                            "Date"
+                        )
+                    )
+                    for (log in dataDB) {
+                        data.add(
+                            arrayOf(
+                                log.userId.toString(),
+                                log.time1,
+                                log.time2,
+                                log.time3,
+                                log.time3,
+                                log.time3,
+                                log.time3,
+                                log.date
+                            )
+                        )
+                    }
 
-                writer.writeAll(data) // data is adding to csv
+                    writer.writeAll(data) // data is adding to csv
 
-                writer.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
+                    writer.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            } else {
+                Toast.makeText(context, "No Data", Toast.LENGTH_LONG).show()
             }
-        })
+        }
 
 /*        val db = DataBaseHandler()
         val exportDir = File(Environment.getExternalStorageDirectory(), "")
