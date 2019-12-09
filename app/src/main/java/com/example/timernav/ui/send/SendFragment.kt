@@ -152,6 +152,7 @@ class SendFragment : Fragment() {
                 intent.putExtra(Intent.EXTRA_BCC, arrayOf<String>("BCC@email.com"))
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Email Subject")
                 intent.putExtra(Intent.EXTRA_STREAM, path)
+                dataDB.clear()
                 startActivity(intent)
             } else {
                 Toast.makeText(context, "No Data", Toast.LENGTH_LONG).show()
