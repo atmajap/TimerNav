@@ -14,13 +14,13 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
-    <string name="lap1_text">Lap 1: </string>
-    <string name="lap2_text">Lap 2: </string>
-    <string name="lap3_text">Lap 3: </string>
-    <string name="lap4_text">Lap 4: </string>
-    <string name="lap5_text">Lap 5: </string>
-    <string name="lap6_text">Lap 6: </string>
-    <string name="call">Call</string>
+    <string name="lap1_text">10 m: </string>
+    <string name="lap2_text">20 m: </string>
+    <string name="lap3_text">30 m: </string>
+    <string name="lap4_text">40 m: </string>
+    <string name="lap5_text">50 m: </string>
+    <string name="lap6_text">60 m: </string>
+    <string name="time">Time</string>
     <string name="save">Save</string>
     <string name="id_number">ID Number</string>
 
@@ -31,4 +31,5 @@
     <string name="user_id">ID : </string>
     <string name="date">Date : </string>
     <string name="reset">reset</string>
+    <string name="ready">ready</string>
 </resources>

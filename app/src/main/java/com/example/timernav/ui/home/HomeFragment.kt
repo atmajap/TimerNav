@@ -2,7 +2,6 @@ package com.example.timernav.ui.home
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +54,7 @@ class HomeFragment : Fragment() {
 
         val call = jsonPlaceHolderApi.posts
 
-        root.call_button.setOnClickListener {
+        root.time_button.setOnClickListener {
             if (callClicked == 0) {
                 callClicked = 1
                 lap1Result_text?.text = ""
