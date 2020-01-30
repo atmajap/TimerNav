@@ -23,6 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.Socket
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,7 +47,7 @@ class HomeFragment : Fragment() {
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://my-json-server.typicode.com/prajogoatmaja/tugasakhir/")
+            .baseUrl("https://192.168.1.200")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -151,6 +152,19 @@ class HomeFragment : Fragment() {
 
         }
 
+        root.reset_button.setOnClickListener {
+            lap1Result_text?.text = ""
+            lap2Result_text?.text = ""
+            lap3Result_text?.text = ""
+            lap4Result_text?.text = ""
+            lap5Result_text?.text = ""
+            lap6Result_text?.text = ""
+            Thread {
+                val client = Socket("192.168.1.200", 80)
+                client.outputStream.write("R".toByteArray())
+                client.close()
+            }.start()
+        }
         return root
     }
 }
