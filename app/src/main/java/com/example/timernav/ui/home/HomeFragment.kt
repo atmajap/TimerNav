@@ -52,7 +52,8 @@ class HomeFragment : Fragment() {
 
         val jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java)
 
-        val call = jsonPlaceHolderApi.posts
+        val time = jsonPlaceHolderApi.posts
+        val ready = jsonPlaceHolderApi.ready
 
         root.time_button.setOnClickListener {
             if (callClicked == 0) {
@@ -63,7 +64,7 @@ class HomeFragment : Fragment() {
                 lap4Result_text?.text = ""
                 lap5Result_text?.text = ""
                 lap6Result_text?.text = ""
-                call.clone().enqueue(object : Callback<List<Post>> {
+                time.clone().enqueue(object : Callback<List<Post>> {
                     override fun onResponse(
                         call: Call<List<Post>>,
                         response: Response<List<Post>>
@@ -107,16 +108,91 @@ class HomeFragment : Fragment() {
                     override fun onFailure(call: Call<List<Post>>, t: Throwable) {
                         callClicked = 0
                         lap1Result_text?.text = t.message
-                        lap2Result_text?.text = t.message
-                        lap3Result_text?.text = t.message
-                        lap4Result_text?.text = t.message
-                        lap5Result_text?.text = t.message
-                        lap6Result_text?.text = t.message
+//                        lap2Result_text?.text = t.message
+//                        lap3Result_text?.text = t.message
+//                        lap4Result_text?.text = t.message
+//                        lap5Result_text?.text = t.message
+//                        lap6Result_text?.text = t.message
+                        val builder = AlertDialog.Builder(root.context)
+                        builder.setTitle("Error")
+                        builder.setMessage("Check the Equipment")
+                        builder.setNegativeButton("Ok") { dialogInterface: DialogInterface?, i: Int ->  }
+                        builder.show()
                     }
 
                 })
             }
         }
+
+        root.ready_button.setOnClickListener {
+            if (callClicked == 0) {
+                callClicked = 1
+                lap1Result_text?.text = ""
+                lap2Result_text?.text = ""
+                lap3Result_text?.text = ""
+                lap4Result_text?.text = ""
+                lap5Result_text?.text = ""
+                lap6Result_text?.text = ""
+                ready.clone().enqueue(object : Callback<List<Post>> {
+                    override fun onResponse(
+                        call: Call<List<Post>>,
+                        response: Response<List<Post>>
+                    ) {
+                        callClicked = 0
+
+                        if (!response.isSuccessful) {
+                            lap1Result_text?.text = "Code : ${response.code()}"
+                            lap2Result_text?.text = "Code : ${response.code()}"
+                            lap3Result_text?.text = "Code : ${response.code()}"
+                            lap4Result_text?.text = "Code : ${response.code()}"
+                            lap5Result_text?.text = "Code : ${response.code()}"
+                            lap6Result_text?.text = "Code : ${response.code()}"
+                            return
+                        }
+
+                        val posts = response.body()
+
+//                        for (post in posts!!) {
+//                            when (post.id) {
+//                                //TODO: change random number to real data
+//                                1 -> lap1 = post.time.toString()
+//                                2 -> lap2 = post.time.toString()
+//                                3 -> lap3 = post.time.toString()
+//                                4 -> lap4 = post.time.toString()
+//                                5 -> lap5 = post.time.toString()
+//                                6 -> lap6 = post.time.toString()
+//                                else -> {
+//                                }
+//                            }
+//                        }
+
+                        lap1Result_text?.append(Extensions.convertToTime(lap1))
+                        lap2Result_text?.append(Extensions.convertToTime(lap2))
+                        lap3Result_text?.append(Extensions.convertToTime(lap3))
+                        lap4Result_text?.append(Extensions.convertToTime(lap4))
+                        lap5Result_text?.append(Extensions.convertToTime(lap5))
+                        lap6Result_text?.append(Extensions.convertToTime(lap6))
+                    }
+
+                    override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                        callClicked = 0
+                        lap1Result_text?.text = t.message
+//                        lap2Result_text?.text = t.message
+//                        lap3Result_text?.text = t.message
+//                        lap4Result_text?.text = t.message
+//                        lap5Result_text?.text = t.message
+//                        lap6Result_text?.text = t.message
+                        val builder = AlertDialog.Builder(root.context)
+                        builder.setTitle("Error")
+                        builder.setMessage("Check the Equipment")
+                        builder.setNegativeButton("Ok") { dialogInterface: DialogInterface?, i: Int ->  }
+                        builder.show()
+                    }
+
+                })
+            }
+        }
+
 
 
         root.save_button.setOnClickListener {

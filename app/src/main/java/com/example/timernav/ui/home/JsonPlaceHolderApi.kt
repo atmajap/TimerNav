@@ -8,4 +8,7 @@ interface JsonPlaceHolderApi {
 
     @get:GET("posts")
     val posts: Call<List<Post>>
+
+    @get:GET("ready")
+    val ready: Call<List<Post>>
 }
