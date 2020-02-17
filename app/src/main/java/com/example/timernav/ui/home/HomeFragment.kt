@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://192.168.1.200")
+            .baseUrl("http://192.168.1.200")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -135,7 +135,7 @@ class HomeFragment : Fragment() {
                 lap6Result_text?.text = ""
                 ready.clone().enqueue(object : Callback<List<Post>> {
                     override fun onResponse(
-                        call: Call<List<Post>>,
+                        ready: Call<List<Post>>,
                         response: Response<List<Post>>
                     ) {
                         callClicked = 0
@@ -152,26 +152,26 @@ class HomeFragment : Fragment() {
 
                         val posts = response.body()
 
-//                        for (post in posts!!) {
-//                            when (post.id) {
-//                                //TODO: change random number to real data
-//                                1 -> lap1 = post.time.toString()
-//                                2 -> lap2 = post.time.toString()
-//                                3 -> lap3 = post.time.toString()
-//                                4 -> lap4 = post.time.toString()
-//                                5 -> lap5 = post.time.toString()
-//                                6 -> lap6 = post.time.toString()
-//                                else -> {
-//                                }
-//                            }
-//                        }
+                        for (post in posts!!) {
+                            when (post.id) {
+                                //TODO: change random number to real data
+                                1 -> lap1 = post.time.toString()
+                                2 -> lap2 = post.time.toString()
+                                3 -> lap3 = post.time.toString()
+                                4 -> lap4 = post.time.toString()
+                                5 -> lap5 = post.time.toString()
+                                6 -> lap6 = post.time.toString()
+                                else -> {
+                                }
+                            }
+                        }
 
-                        lap1Result_text?.append(Extensions.convertToTime(lap1))
-                        lap2Result_text?.append(Extensions.convertToTime(lap2))
-                        lap3Result_text?.append(Extensions.convertToTime(lap3))
-                        lap4Result_text?.append(Extensions.convertToTime(lap4))
-                        lap5Result_text?.append(Extensions.convertToTime(lap5))
-                        lap6Result_text?.append(Extensions.convertToTime(lap6))
+//                        lap1Result_text?.append(Extensions.convertToTime(lap1))
+//                        lap2Result_text?.append(Extensions.convertToTime(lap2))
+//                        lap3Result_text?.append(Extensions.convertToTime(lap3))
+//                        lap4Result_text?.append(Extensions.convertToTime(lap4))
+//                        lap5Result_text?.append(Extensions.convertToTime(lap5))
+//                        lap6Result_text?.append(Extensions.convertToTime(lap6))
                     }
 
                     override fun onFailure(call: Call<List<Post>>, t: Throwable) {
