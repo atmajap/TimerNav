@@ -116,7 +116,7 @@ class HomeFragment : Fragment() {
                         val builder = AlertDialog.Builder(root.context)
                         builder.setTitle("Error")
                         builder.setMessage("Check the Equipment")
-                        builder.setNegativeButton("Ok") { dialogInterface: DialogInterface?, i: Int ->  }
+                        builder.setNegativeButton("Ok") { dialogInterface: DialogInterface?, i: Int -> }
                         builder.show()
                     }
 
@@ -185,7 +185,7 @@ class HomeFragment : Fragment() {
                         val builder = AlertDialog.Builder(root.context)
                         builder.setTitle("Error")
                         builder.setMessage("Check the Equipment")
-                        builder.setNegativeButton("Ok") { dialogInterface: DialogInterface?, i: Int ->  }
+                        builder.setNegativeButton("Ok") { dialogInterface: DialogInterface?, i: Int -> }
                         builder.show()
                     }
 
@@ -206,23 +206,20 @@ class HomeFragment : Fragment() {
             val customDialog = dialog.create()
             customDialog.show()
             customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                if (idNumber.text.length > 5) {
 
-                    val outputPattern = "dd-MMM-yyyy"
-                    val outputFormat = SimpleDateFormat(outputPattern)
-                    val date = outputFormat.format(Date())
+                val outputPattern = "dd-MMM-yyyy"
+                val outputFormat = SimpleDateFormat(outputPattern)
+                val date = outputFormat.format(Date())
 
-                    var user = User(
-                        userId = idNumber.text.toString().toInt(), time1 = lap1,
-                        time2 = lap2, time3 = lap3,
-                        time4 = lap4, time5 = lap5,
-                        time6 = lap6, date = date
-                    )
-                    var db = DataBaseHandler()
-                    db.insertData(user)
-                    customDialog.dismiss()
-                } else
-                    Toast.makeText(activity?.baseContext, "ID not valid", Toast.LENGTH_SHORT).show()
+                var user = User(
+                    userId = idNumber.text.toString().toInt(), time1 = lap1,
+                    time2 = lap2, time3 = lap3,
+                    time4 = lap4, time5 = lap5,
+                    time6 = lap6, date = date
+                )
+                var db = DataBaseHandler()
+                db.insertData(user)
+                customDialog.dismiss()
             }
 
         }
